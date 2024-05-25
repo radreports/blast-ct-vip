@@ -10,7 +10,9 @@ app = Flask(__name__)
 # Load the pre-trained model
 model = torch.load('data/saved_models/your_model.pt')
 model.eval()
-
+@app.route('/')
+def index():
+    return render_template('index.html')
 @app.route('/infer', methods=['POST'])
 def infer():
     # Save uploaded file
