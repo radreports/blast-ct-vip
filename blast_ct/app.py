@@ -19,7 +19,7 @@ def infer():
     # if file_extension not in ['.nii', '.nii.gz']:
     #     return "Invalid file format. Please upload a .nii or .nii.gz file.", 400
 
-    input_path = os.path.join('/tmp', str(uuid.uuid4()) + file_extension)
+    input_path = os.path.join('/tmp', str(uuid.uuid4()) + ".nii.gz")
     file.save(input_path)
 
     # Generate unique output path
