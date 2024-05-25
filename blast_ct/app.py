@@ -14,6 +14,7 @@ def infer():
     # Save uploaded file
     file = request.files['file']
     file_extension = os.path.splitext(file.filename)[1]
+    print("file_extension: ", file_extension)
     print("Input file is: ", file)
     # if file_extension not in ['.nii', '.nii.gz']:
     #     return "Invalid file format. Please upload a .nii or .nii.gz file.", 400
