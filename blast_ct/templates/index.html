@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload .nii.gz File</title>
+</head>
+<body>
+    <h1>Upload .nii.gz File for Inference</h1>
+    <form action="/infer" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".nii.gz" required>
+        <button type="submit">Upload and Process</button>
+    </form>
+</body>
+</html>
