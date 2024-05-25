@@ -1,14 +1,21 @@
-from flask import Flask, request, send_file
-import torch
+from flask import Flask, request, send_file, render_template
+import torch,json
 import nibabel as nib
 import numpy as np
 import os
 import uuid
+from blast_ct.read_config import get_model, get_test_loader
+
+
 
 app = Flask(__name__)
 
 # Load the pre-trained model
-model = torch.load('data/saved_models/your_model.pt')
+# model = torch.load('data/saved_models/your_model.pt')
+config_file = 'data/config.json'
+with open(config_file, 'r') as f:
+        config = json.load(f)
+model = model = get_model(config)
 model.eval()
 @app.route('/')
 def index():
