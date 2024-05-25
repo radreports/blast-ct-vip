@@ -24,8 +24,21 @@ def index():
 def infer():
     # Save uploaded file
     file = request.files['file']
-    input_path = os.path.join('/tmp', str(uuid.uuid4()) + '.nii.gz')
+    file_extension = os.path.splitext(file.filename)[1]
+    
+    if file_extension not in ['.nii', '.nii.gz']:
+        return "Invalid file format. Please upload a .nii or .nii.gz file.", 400
+
+    input_path = os.path.join('/tmp', str(uuid.uuid4()) + file_extension)
     file.save(input_path)
+
+    # Decompress if .nii.gz
+    if file_extension == '.nii.gz':
+        with gzip.open(input_path, 'rb') as f_in:
+            decompressed_path = input_path.replace('.nii.gz', '.nii')
+            with open(decompressed_path, 'wb') as f_out:
+                shutil.copyfileobj(f_in, f_out)
+        input_path = decompressed_path
 
     # Load the input image
     img = nib.load(input_path)
@@ -48,6 +61,5 @@ def infer():
     nib.save(output_nifti, output_path)
 
     return send_file(output_path, as_attachment=True)
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
